@@ -1,5 +1,16 @@
-gridsize = 10
+import pygame
+import sys
+import random as r
+
+pygame.init()
+pygame.display.set_caption("Conway's game of life")
+screen = pygame.display.set_mode((600, 600))    
+screen.fill((250, 200, 200))
+clock = pygame.time.Clock()
+
+gridsize = 100
 life = [[0 for a in range(gridsize)] for b in range(gridsize)]
+sqsize = screen.get_width() // gridsize
 
 def flip(x, y):
     for a in range(len(life)):
@@ -12,15 +23,19 @@ def flip(x, y):
                         life[a][b] = 1
     return
 
+#startcount = 200
+#for q in range(startcount):
+#    flip(r.randint(0, gridsize), r.randint(0, gridsize))
 
-flip(4,3)
-flip(3,4)
-flip(4,4)
-flip(5,4)
-flip(4,5)
-for i in life:
-    print(i)
-
+flip(1, 2)
+flip(2, 1)
+flip(3, 1)
+flip(2, 3)
+flip(4, 2)
+flip(5, 3)
+flip(5, 4)
+flip(4, 4)
+flip(3, 4)
 
 def check(x, y):
     lifecount = 0
@@ -50,26 +65,35 @@ def check(x, y):
         lifecount += 1     
     return lifecount
 
-
-cont = input("Press enter to begin:\n")
-while cont != "exit":
+state = False
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.KEYDOWN:
+            state = not state
     to_flip = []
-    for a in range(len(life)):
-        for b in range(len(life[a])):
-            nearby = check(a, b)
-            if life[a][b]:
-                if nearby <= 1:
-                    to_flip.append([a, b])
-                if nearby >= 4:
-                    to_flip.append([a, b])
-            else:
-                if nearby == 3:
-                    to_flip.append([a, b])
-    for x, y in to_flip:
-        flip(x, y)
-    for i in life:
-        print(i)
-    cont = input("Press enter to continue the game:\n")
-                
-                
+    if state == True:        
+        for a in range(len(life)):
+            for b in range(len(life[a])):
+                nearby = check(a, b)
+                if life[a][b]:
+                    if nearby <= 1:
+                        to_flip.append([a, b])
+                    if nearby >= 4:
+                        to_flip.append([a, b])
+                else:
+                    if nearby == 3:
+                        to_flip.append([a, b])
+        for x, y in to_flip:
+            flip(x, y)
+    for i in range(len(life)):
+        for j in range(len(life[i])):
+            if life[i][j]:
+                pygame.draw.rect(screen, (20,50,200), (i*sqsize, j*sqsize, sqsize, sqsize))
+    pygame.display.update()
+    screen.fill((250, 200, 200))
+    msElapsed = clock.tick(3)
+
                 
