@@ -1,7 +1,9 @@
 # Conway-s-Game-of-Life
 
-Functional conway's game of life. Prints results in console for now, will add graphics later.
+0.2 Basic conway's game of life in console using a list of lists. 
 
-Graphics added using pygame, but found bugs in flip logic
+0.4 Graphics added using pygame, but found bugs in flip logic
 
-Flip logic fixed, graphics perfected, can now start/pause by pressing any key and add grid by clicking with mouse
+0.8 Flip logic fixed, graphics perfected, can now start/pause by pressing any key and add grid by clicking with mouse
+
+1.0 Instruction and choice with user input, commented code, fully functional game
